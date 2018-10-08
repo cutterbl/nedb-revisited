@@ -58,6 +58,7 @@
     "request": "2.9.x",
     "serve-static": "^1.13.2",
     "sinon": "1.3.x",
+    "sort-on": "^3.0.0",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2"
   },

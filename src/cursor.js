@@ -2,7 +2,8 @@
  * Manage access to data, be it to find, update or remove it
  */
 import omit from 'lodash.omit';
-import { getDotValue, modify, match, compareThings } from './model';
+import sortOn from 'sort-on';
+import { getDotValue, modify, match } from './model';
 
 /**
  * Apply the projection
@@ -56,7 +57,7 @@ const project = function(candidates) {
     res.push(toPush);
   });
 
-  return res; // TODO: Does this need to be a Promise return?
+  return res;
 };
 
 /**
@@ -153,26 +154,11 @@ export default class Cursor {
 
         // Sorting
         const criteria = [];
-        for (let i = 0; i < keys.length; i = i + 1) {
-          const key = keys[i];
-          criteria.push({ key: key, direction: this._sort[key] });
-        }
-        res.sort((a, b) => {
-          for (let i = 0; i < criteria.length; i = i + 1) {
-            const criterion = criteria[i];
-            const compare =
-              criterion.direction *
-              compareThings(
-                getDotValue(a, criterion.key),
-                getDotValue(b, criterion.key),
-                this.db.compareStrings
-              );
-            if (compare !== 0) {
-              return Promise.resolve(compare);
-            }
-          }
-          return Promise.resolve(0);
+        keys.forEach(key => {
+          criteria.push(`${this._sort[key] < 0 ? '-' : ''}${key}`);
         });
+
+        res = sortOn(res, criteria.length > 1 ? criteria : criteria[0]);
 
         totalCount = res.length; // get totalCount prior to slicing it up
         // Applying limit and skip

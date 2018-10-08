@@ -1,9 +1,17 @@
+const pkg = require('./package.json');
+
+const moduleName = pkg.name;
+
 module.exports = (env, argv) => {
   return {
-    entry: `${__dirname}/index.js`,
+    entry: `${__dirname}/src/index.js`,
     output: {
       path: `${__dirname}/dist`,
-      filename: 'nedb-revisited.js'
+      filename: `${moduleName}.js`,
+      library: 'nedb',
+      libraryExport: 'default',
+      libraryTarget: 'umd',
+      umdNamedDefine: true
     },
     optimization: {
       minimize: false
@@ -24,13 +32,6 @@ module.exports = (env, argv) => {
               loader: 'eslint-loader'
             }
           ]
-        },
-        {
-          test: /\.json$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'json-loader'
-          }
         }
       ]
     },

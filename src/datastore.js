@@ -242,7 +242,7 @@ export default class DataStore extends EventEmitter {
   timeStampData = false;
   nodeWebkitAppName = null;
   corruptAlertThreshold = 0.1;
-  compareStrings = null;
+  compareStrings = undefined;
   beforeSerialization = passthrough;
   afterSerialization = passthrough;
 
@@ -328,6 +328,13 @@ export default class DataStore extends EventEmitter {
     return Promise.resolve(this.indexes._id.getAll());
   }
 
+  getAll(immediate = false) {
+    if (immediate) {
+      return this.getAllData();
+    }
+    return new Cursor(this, { _id: { $gt: '' } });
+  }
+
   /**
    * Reset all currently defined indexes
    * @param newData
@@ -373,7 +380,6 @@ export default class DataStore extends EventEmitter {
         .catch(error => {
           throw error;
         });
-      this.indexes[options.fieldName].insert(this.getAllData());
     } catch (e) {
       delete this.indexes[options.fieldName];
       return Promise.reject(e);
@@ -616,6 +622,7 @@ export default class DataStore extends EventEmitter {
 
     const cursor = new Cursor(this, query, docs => {
       const res = [];
+      docs = docs || []; // in case docs is empty
       docs.forEach(doc => {
         res.push(deepCopy(doc));
       });

@@ -1,0 +1,42 @@
+{
+  "songs": [
+    {
+      "artist": "Led Zeppelin",
+      "title": "I Can't Quit You Babe",
+      "album": "Led Zeppelin I",
+      "year": 1969,
+      "genre": ["rock"]
+    },
+    {
+      "artist": "Jimi Hendrix",
+      "title": "Hey Joe",
+      "album": "Are You Experienced",
+      "year": 1968,
+      "genre": ["rock", "blues"]
+    },
+    {
+      "artist": "Crowded House",
+      "title": "Our House"
+    },
+    {
+      "artist": "Jimi Hendrix",
+      "title": "Red House",
+      "genre": ["blues"]
+    },
+    {
+      "artist": "Jimi Hendrix",
+      "title": "Crosstown Traffic",
+      "genre": ["rock"]
+    },
+    {
+      "artist": "Jimi Hendrix",
+      "title": "Purple Haze",
+      "genre": ["rock"]
+    },
+    {
+      "artist": "Jimi Hendrix",
+      "title": "Voodoo Chile",
+      "genre": ["rock", "blues"]
+    }
+  ]
+}
